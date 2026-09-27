@@ -1,0 +1,23 @@
+name: Build Nuttnmon GBA
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container:
+      image: devkitpro/devkitarm:latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Build ROM
+        run: make
+      - name: Upload Nuttnmon ROM
+        uses: actions/upload-artifact@v4
+        with:
+          name: Nuttnmon-GBA
+          path: Nuttnmon.gba
+          if-no-files-found: error
